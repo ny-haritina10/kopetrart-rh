@@ -5,75 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Talent Need</title>
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            padding: 20px; 
-            max-width: 1200px; 
-            margin: 0 auto; 
-            background-color: #eaeaea; 
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
         }
-        .form-container { 
-            border: 1px solid #ddd; 
-            padding: 30px; 
-            border-radius: 10px; 
-            background: #ffffff; 
-            max-width: 800px; 
-            margin: 0 auto; 
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        .header {
+            border-bottom: 2px solid black;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
         }
-        h1 { 
-            text-align: center; 
-            margin-bottom: 30px; 
+        h1 {
+            font-size: 1.5em;
             color: #333;
         }
-        label { 
-            display: block; 
-            margin-bottom: 8px; 
-            font-weight: bold; 
+        .form-container {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
             color: #555;
         }
-        input, select, textarea { 
-            width: calc(100% - 22px); /* Adjust for padding */
-            max-width: 400px; 
-            padding: 12px; 
-            margin-bottom: 20px; 
-            border-radius: 5px; 
-            border: 1px solid #ccc; 
-            background: #f9f9f9; 
-            transition: border-color 0.3s;
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px 12px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #f0f0f0;
+            color: #333;
         }
-        input:focus, select:focus, textarea:focus {
-            border-color: #007BFF;
-            outline: none;
+        .inline-inputs input[type="number"] {
+            width: calc(50% - 10px);
+            display: inline-block;
         }
         .inline-inputs {
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 10px;
         }
-        .inline-inputs input { 
-            width: 80px; /* Adjusted for better layout */
+        input[type="checkbox"],
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #f0f0f0;
         }
         button {
-            display: block;
-            width: auto;
-            margin-top: 20px;
-            background-color: #007BFF;
+            background: black;
             color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
+            padding: 8px 16px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #0056b3;
+            margin-top: 15px;
+            display: block;
+            width: 100%;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h1>Créer un Besoin de Talent</h1>
+    <div class="header">
+        <h1>Créer un Besoin de Talent</h1>
+    </div>
     <div class="form-container">
         <form action="{{ route('talent_needs.store') }}" method="POST">
             @csrf
@@ -136,40 +145,32 @@
                 <textarea name="additional_info" id="additional_info"></textarea>
             </div>
 
-           <!-- New Fields -->
-           <div>
-               <label for="department">Département:</label>
-               <select name="department_id" id="department" required>
-                   <option value="">Sélectionner le département</option>
-                   @foreach ($departments as $department)
-                       <option value="{{ $department->id }}">{{ $department->name }}</option>
-                   @endforeach
-               </select>
-           </div>
+            <div>
+                <label for="department">Département:</label>
+                <select name="department_id" id="department" required>
+                    <option value="">Sélectionner le département</option>
+                    @foreach ($departments as $department)
+                        <option value="{{ $department->id }}">{{ $department->name }}</option>
+                    @endforeach
+                </select>
+            </div>
 
-           <div>
-               <label for="required_date">Date requise:</label>
-               <input type="date" name="required_date" id="required_date">
-           </div>
+            <div>
+                <label for="required_date">Date requise:</label>
+                <input type="date" name="required_date" id="required_date">
+            </div>
 
-           <div>
-               <label for "status">Statut:</label>
-               <select name "status", id "status">
-                   <!-- Options -->
-                   option value "En cours">En cours</option
-                   option value "Complété">Complété</option
-                   option value "Annulé">Annulé</option
-               </select
-           </div>
+            <div>
+                <label for="status">Statut:</label>
+                <select name="status" id="status">
+                    <option value="En cours">En cours</option>
+                    <option value="Complété">Complété</option>
+                    <option value="Annulé">Annulé</option>
+                </select>
+            </div>
 
-           <!-- End of New Fields -->
-
-           <!-- Submit Button -->
-           <button type "submit">Valider</button>
-
-       </form>        
-   </div>
-
+            <button type="submit">Valider</button>
+        </form>        
+    </div>
 </body>
-
 </html>
