@@ -1,0 +1,59 @@
+- carte 21:   
+    - Dossier:
+        - Table: 
+            -postes(id,libelle)
+            -dossiers(id,candidat,email,poste,date_reception,statut,cv,lettre_motivation)
+
+        - Model:
+            -postes: 
+                - all() -> array<Poste>
+
+            -dossiers: 
+                - all() -> array<Dossier>
+                - find($id) -> Dossier
+                - create() -> any
+                - delete() -> any
+                - filtre(candiat,poste,status) -> array<Dossier>   
+                - export_pdf_image (pdf-name[root/to/candidat-create_at.pdf])
+        - View:
+            - dossier-form:
+                - candidat: text
+                - email: email
+                - poste: select(poste)
+                - cv: fichier
+                - lettre_motivation: fichier
+                - button: submit
+
+            - dossier-list:
+                - table: 
+                    - candidat
+                    - poste
+                    - date_reception
+                    - statut 
+                    - boutton-cv 
+                    - boutton-lettre_motivation
+                    - button-delete
+                    - button-analyser
+                    - after process pdf show popup image 
+        - Controller:
+            - DossierController: 
+                - index(): Model\Dossier::all(),Model\Dossier::filtre(filters[candiat,poste,status]) -> View\dossier-list
+                
+                - create(): View\dossier-list.button-add -> (Model\Post::all()) -> View\dossier-form
+                - store($request): View\dossier-form.button -> Model\Dossier::create()
+                
+                - process_cv($candidat,$tempstamp): export_pdf_image ($candidat.$tempstamp-cv.".pdf") -> View\dossier-list
+
+                - process_lm($candidat,$tempstamp): export_pdf_image ($candidat.$tempstamp-lm.".pdf") -> View\dossier-list
+
+                - process_analyse($image-cv,$image-lm) -> View\analyse-form 
+
+                - delete($id): View\dossier-list.button-delete -> Model\Dossier::delete($id) 
+
+    - comparaison de cv avec profil 
+        - Table:
+                - competence(id,)
+                - profil(id,besoin,experience) 
+                - profil-experience(id,profile)
+            mb_convert_kana
+            
